@@ -1,0 +1,25 @@
+:root {
+    --baseBG: #2e3436;
+}
+
+body {
+    background-color: var(--baseBG);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: auto;
+    margin: auto;
+}
+
+main input {
+    margin: 10px;
+}
+
+button {
+    margin: 10px;
+}

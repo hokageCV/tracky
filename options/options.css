@@ -1,0 +1,12 @@
+:root {
+  --mainBG: #6c7072;
+  --mainText: #fbfcf8;
+}
+
+body {
+  width: 250px;
+  margin: 0;
+  padding: 0;
+  background-color: var(--mainBG);
+  color: var(--mainText);
+}

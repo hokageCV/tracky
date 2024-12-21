@@ -1,0 +1,44 @@
+:root {
+    --navBG: #353839;
+    --navText: #f9ab58;
+    --mainBG: #6c7072;
+    --mainText: #fbfcf8;
+}
+
+body {
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    background-color: var(--baseBG);
+    color: var(--baseText);
+}
+
+nav {
+    background-color: var(--navBG);
+    padding: 1px;
+    margin: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+nav p {
+    font-size: 22px;
+    color: var(--navText);
+
+    margin: 1px;
+    padding: 5px;
+    height: 30px;
+}
+
+main {
+    font-size: 16px;
+    color: var(--mainText);
+    background-color: var(--mainBG);
+    padding: 5px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,18 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./popup.css" />
-    <title>Tracky</title>
-  </head>
-  <body>
-    <nav>
-      <p>Tracky</p>
-    </nav>
-    <main>
-    </main>
-  </body>
-  <script type="module" src="./popup.js"></script>
+<html lang='en'>
+
+<head>
+  <meta charset='UTF-8' />
+  <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <link rel='stylesheet' href='./popup.css' />
+  <title>Tracky</title>
+</head>
+
+<body>
+  <nav>
+    <p>Tracky</p>
+  </nav>
+  <main>
+    <h4>Add a Log</h4>
+    <input type='number' id='time-spent' placeholder='Time Spent (mins)' min='1' required>
+    <textarea id='description' placeholder='Description' required></textarea>
+    <button id='save-log'>Save Log</button>
+
+    <div id='total-time'></div>
+    <ul id='log-container'></ul>
+  </main>
+</body>
+<script type='module' src='./popup.js'></script>
+
 </html>

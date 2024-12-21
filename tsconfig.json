@@ -9,10 +9,7 @@
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
-    "baseUrl": ".", // Root directory for imports
-    "paths": {
-      "@/*": ["*"],
-    }
+    "types": ["chrome"], // to let TS know about chrome types
   },
   "exclude": ["node_modules"]
 }

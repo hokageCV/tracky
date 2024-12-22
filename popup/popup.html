@@ -15,17 +15,22 @@
   </nav>
   <main>
     <h4>Add a Log</h4>
-    <label for="start-time">Start Time:</label>
-    <input type="time" id="start-time" />
+    <label for='start-time'>Start Time:</label>
+    <input type='time' id='start-time' />
 
-    <label for="end-time">End Time:</label>
-    <input type="time" id="end-time" />
+    <label for='end-time'>End Time:</label>
+    <input type='time' id='end-time' />
 
     <textarea id='description' placeholder='Description' required></textarea>
+
+    <label for='tags'>Tags (comma separated):</label>
+    <input type='text' id='tags'>
+
     <button id='save-log'>Save Log</button>
 
     <div id='total-time'></div>
     <ul id='log-container'></ul>
+    <button id="view-by-tags-btn">View Logs by Tags</button>
   </main>
 </body>
 <script type='module' src='./popup.js'></script>

@@ -19,5 +19,11 @@
     "default_popup": "./popup/popup.html",
     "default_title": "Extension",
     "default_icon": "./assets/icon48.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["popup/grouped_by_tag/grouped_by_tag.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

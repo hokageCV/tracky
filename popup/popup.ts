@@ -1,8 +1,9 @@
-type LogEntry = {
+export type LogEntry = {
   startTime: string;
   endTime: string;
   description: string;
   date: string;
+  tag?: string;
 }
 
 document.getElementById('save-log')?.addEventListener('click', save_log_entry);
@@ -14,6 +15,7 @@ function save_log_entry(): void {
   const start_time = (document.getElementById('start-time') as HTMLInputElement).value;
   const end_time = (document.getElementById('end-time') as HTMLInputElement).value;
   const description = (document.getElementById('description') as HTMLTextAreaElement).value;
+  const tag= (document.getElementById('tags') as HTMLInputElement).value;
   const today_date = get_today_date();
 
   if (!start_time || !end_time || start_time >= end_time) {
@@ -31,14 +33,17 @@ function save_log_entry(): void {
       endTime: end_time,
       description: description,
       date: today_date,
+      tag,
     };
 
     logs[today_date].push(new_log);
+    console.log('DBG:',{logs});
 
     chrome.storage.local.set({ logs: logs }, () => {
       (document.getElementById('start-time') as HTMLInputElement).value = '';
       (document.getElementById('end-time') as HTMLInputElement).value = '';
       (document.getElementById('description') as HTMLTextAreaElement).value = '';
+      (document.getElementById('tags') as HTMLInputElement).value = '';
       display_logs();
     });
   });
@@ -130,7 +135,7 @@ function format_duration(minutes: number): string {
   return `${minutes}m`;
 }
 
-function format_into_12hr(time: string): string {
+export function format_into_12hr(time: string): string {
   const [hour, minute] = time.split(':').map(Number);
   const am_pm = hour >= 12 ? 'pm' : 'am';
   const adjusted_hour = hour % 12 || 12; // Convert 0 to 12 for midnight
@@ -174,6 +179,8 @@ function edit_log(index: number, log: LogEntry, date: string): void {
     <input type="time" id="edit-end-time" value="${log.endTime}">
     <label for="edit-description">Description:</label>
     <textarea id="edit-description">${log.description}</textarea>
+    <label for="edit-tags">Tags (comma separated):</label>
+    <input type="text" id="edit-tags"value="${log?.tag || null}">
     <button id="save-edit-btn">Save</button>
     <button id="cancel-edit-btn">Cancel</button>
   `;
@@ -186,12 +193,14 @@ function edit_log(index: number, log: LogEntry, date: string): void {
       const newStartTime = (document.getElementById('edit-start-time') as HTMLInputElement).value;
       const newEndTime = (document.getElementById('edit-end-time') as HTMLInputElement).value;
       const newDescription = (document.getElementById('edit-description') as HTMLTextAreaElement).value;
+      const newTag = (document.getElementById('edit-tags') as HTMLInputElement).value;
 
       const updatedLog: LogEntry = {
         startTime: newStartTime,
         endTime: newEndTime,
         description: newDescription,
         date: log.date,
+        tag: newTag,
       };
 
       update_log(index, updatedLog, date);
@@ -219,3 +228,12 @@ function update_log(index: number, updatedLog: LogEntry, date: string): void {
     });
   });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const viewByTagsButton = document.getElementById('view-by-tags-btn') as HTMLButtonElement;
+  if (viewByTagsButton) {
+    viewByTagsButton.addEventListener('click', () => {
+      window.location.href = './grouped_by_tag/grouped_by_tag.html';
+    });
+  }
+});

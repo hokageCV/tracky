@@ -76,7 +76,7 @@ function display_logs(): void {
     }, 0)
     totalTimeContainer.innerHTML = `<p><strong>Total time today: </strong>${format_duration(total_time)}</p>`;
 
-    todays_logs.forEach((log) => {
+    todays_logs.forEach((log, index) => {
       const duration = calculate_duration(log.startTime, log.endTime)
       const log_entry = document.createElement('div');
       log_entry.classList.add('log-entry');
@@ -84,9 +84,17 @@ function display_logs(): void {
         <li>
           <strong>${format_duration(duration)}</strong>
           <small>(${format_into_12hr(log.startTime)}-${format_into_12hr(log.endTime)})</small>: ${log.description}
+          <button class="delete-btn" data-index="${index}">\u{1F5D1}️</button>
         </li>
       `;
       logContainer.appendChild(log_entry);
+
+      const deleteButton = log_entry.querySelector('.delete-btn');
+      if (deleteButton) {
+        deleteButton.addEventListener('click', () => {
+          delete_log(index, today_date);
+        });
+      }
     });
   });
 }
@@ -123,4 +131,23 @@ function format_into_12hr(time: string): string {
   const padded_minute = minute.toString().padStart(2, '0');
 
   return `${padded_hour}:${padded_minute} ${am_pm}`;
+}
+
+function delete_log(index: number, date: string) {
+  chrome.storage.local.get(['logs'], (result) => {
+    const logs: { [date: string]: LogEntry[] } = result.logs || {};
+    const todays_logs = logs[date] || [];
+
+    todays_logs.splice(index, 1);
+
+    if (todays_logs.length === 0) {
+      delete logs[date];
+    } else {
+      logs[date] = todays_logs;
+    }
+
+    chrome.storage.local.set({ logs }, () => {
+      display_logs();
+    });
+  });
 }

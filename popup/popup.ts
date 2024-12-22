@@ -135,7 +135,7 @@ function format_duration(minutes: number): string {
   return `${minutes}m`;
 }
 
-export function format_into_12hr(time: string): string {
+function format_into_12hr(time: string): string {
   const [hour, minute] = time.split(':').map(Number);
   const am_pm = hour >= 12 ? 'pm' : 'am';
   const adjusted_hour = hour % 12 || 12; // Convert 0 to 12 for midnight

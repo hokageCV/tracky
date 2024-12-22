@@ -84,6 +84,7 @@ function display_logs(): void {
         <li>
           <strong>${format_duration(duration)}</strong>
           <small>(${format_into_12hr(log.startTime)}-${format_into_12hr(log.endTime)})</small>: ${log.description}
+          <button class="edit-btn" data-index="${index}">\u{270E}</button>
           <button class="delete-btn" data-index="${index}">\u{1F5D1}️</button>
         </li>
       `;
@@ -93,6 +94,13 @@ function display_logs(): void {
       if (deleteButton) {
         deleteButton.addEventListener('click', () => {
           delete_log(index, today_date);
+        });
+      }
+
+      const editButton = log_entry.querySelector('.edit-btn');
+      if (editButton) {
+        editButton.addEventListener('click', () => {
+          edit_log(index, log, today_date);
         });
       }
     });
@@ -145,6 +153,66 @@ function delete_log(index: number, date: string) {
     } else {
       logs[date] = todays_logs;
     }
+
+    chrome.storage.local.set({ logs }, () => {
+      display_logs();
+    });
+  });
+}
+
+function edit_log(index: number, log: LogEntry, date: string): void {
+  const logContainer = document.getElementById('log-container') as HTMLDivElement;
+  logContainer.innerHTML = '';
+
+  const editForm = document.createElement('div');
+  editForm.classList.add('edit-form');
+  editForm.innerHTML = `
+    <h3>Edit Log</h3>
+    <label for="edit-start-time">Start Time:</label>
+    <input type="time" id="edit-start-time" value="${log.startTime}">
+    <label for="edit-end-time">End Time:</label>
+    <input type="time" id="edit-end-time" value="${log.endTime}">
+    <label for="edit-description">Description:</label>
+    <textarea id="edit-description">${log.description}</textarea>
+    <button id="save-edit-btn">Save</button>
+    <button id="cancel-edit-btn">Cancel</button>
+  `;
+
+  logContainer.appendChild(editForm);
+
+  const saveButton = document.getElementById('save-edit-btn') as HTMLButtonElement;
+  if (saveButton) {
+    saveButton.addEventListener('click', () => {
+      const newStartTime = (document.getElementById('edit-start-time') as HTMLInputElement).value;
+      const newEndTime = (document.getElementById('edit-end-time') as HTMLInputElement).value;
+      const newDescription = (document.getElementById('edit-description') as HTMLTextAreaElement).value;
+
+      const updatedLog: LogEntry = {
+        startTime: newStartTime,
+        endTime: newEndTime,
+        description: newDescription,
+        date: log.date,
+      };
+
+      update_log(index, updatedLog, date);
+    });
+  }
+
+  const cancelButton = document.getElementById('cancel-edit-btn') as HTMLButtonElement;
+  if (cancelButton) {
+    cancelButton.addEventListener('click', () => {
+      display_logs();
+    });
+  }
+}
+
+function update_log(index: number, updatedLog: LogEntry, date: string): void {
+  chrome.storage.local.get(['logs'], (result) => {
+    const logs: { [date: string]: LogEntry[] } = result.logs || {};
+    const todays_logs = logs[date] || [];
+
+    todays_logs[index] = updatedLog;
+    logs[date] = todays_logs;
 
     chrome.storage.local.set({ logs }, () => {
       display_logs();

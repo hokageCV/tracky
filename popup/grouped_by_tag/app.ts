@@ -1,4 +1,4 @@
-import { LogEntry } from '../popup';
+import { LogEntry } from '../app';
 
 document.addEventListener('DOMContentLoaded', () => {
   display_logs_grouped_by_tag();
@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const backButton = document.getElementById('back-btn') as HTMLButtonElement;
   if (backButton) {
     backButton.addEventListener('click', () => {
-      window.location.href = '../popup.html';
+      window.location.href = '../index.html';
     });
   }
 });

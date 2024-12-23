@@ -8,6 +8,14 @@ export type LogEntry = {
 
 document.getElementById('save-log')?.addEventListener('click', save_log_entry);
 document.addEventListener('DOMContentLoaded', () => { display_logs() });
+document.addEventListener('DOMContentLoaded', () => {
+  const viewByTagsButton = document.getElementById('view-by-tags-btn') as HTMLButtonElement;
+  if (viewByTagsButton) {
+    viewByTagsButton.addEventListener('click', () => {
+      window.location.href = './grouped_by_tag/index.html';
+    });
+  }
+});
 
 // =======================================
 
@@ -228,12 +236,3 @@ function update_log(index: number, updatedLog: LogEntry, date: string): void {
     });
   });
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  const viewByTagsButton = document.getElementById('view-by-tags-btn') as HTMLButtonElement;
-  if (viewByTagsButton) {
-    viewByTagsButton.addEventListener('click', () => {
-      window.location.href = './grouped_by_tag/grouped_by_tag.html';
-    });
-  }
-});

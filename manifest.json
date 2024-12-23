@@ -12,17 +12,17 @@
   "host_permissions": ["<all_urls>"],
   "permissions": ["storage"],
   "background": {
-    "service_worker": "./background/background.js"
+    "service_worker": "./background/app.js"
   },
-  "options_page": "./options/options.html",
+  "options_page": "./options/index.html",
   "action": {
-    "default_popup": "./popup/popup.html",
+    "default_popup": "./popup/index.html",
     "default_title": "Extension",
     "default_icon": "./assets/icon48.png"
   },
   "web_accessible_resources": [
     {
-      "resources": ["popup/grouped_by_tag/grouped_by_tag.html"],
+      "resources": ["popup/grouped_by_tag/index.html"],
       "matches": ["<all_urls>"]
     }
   ]

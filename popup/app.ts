@@ -7,7 +7,10 @@ export type LogEntry = {
 }
 
 document.getElementById('save-log')?.addEventListener('click', save_log_entry);
-document.addEventListener('DOMContentLoaded', () => { display_logs() });
+document.addEventListener('DOMContentLoaded', () => {
+  display_logs()
+  populate_tags_list()
+});
 document.addEventListener('DOMContentLoaded', () => {
   const viewByTagsButton = document.getElementById('view-by-tags-btn') as HTMLButtonElement;
   if (viewByTagsButton) {
@@ -56,8 +59,9 @@ function save_log_entry(): void {
   });
 }
 
-function get_today_date(): string {
+function get_today_date(offset: number = 0): string {
   const today = new Date();
+  today.setDate(today.getDate() + offset);
   return today
     .toISOString()
     .split('T')[0]; // select first part of ISO string
@@ -241,6 +245,31 @@ function update_log(index: number, updatedLog: LogEntry, date: string): void {
 
     chrome.storage.local.set({ logs }, () => {
       display_logs();
+    });
+  });
+}
+
+function populate_tags_list(): void {
+  const today_date = get_today_date();
+  const yesterday_date = get_today_date(-1);
+
+  chrome.storage.local.get(['logs'], (result) => {
+    const logs: { [date: string]: LogEntry[] } = result.logs || {};
+    const todays_logs: LogEntry[] = logs[today_date] || [];
+    const yesterdays_logs = logs[yesterday_date] || [];
+
+    const unique_tags = new Set<string>();
+    [...todays_logs, ...yesterdays_logs].forEach((log) => {
+      if (log.tag) unique_tags.add(log.tag);
+    });
+
+    const datalist = document.getElementById('tags-list') as HTMLDataListElement;
+    datalist.innerHTML = '';
+
+    unique_tags.forEach((tag) => {
+      const option = document.createElement('option');
+      option.value = tag;
+      datalist.appendChild(option);
     });
   });
 }

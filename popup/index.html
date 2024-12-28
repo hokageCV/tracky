@@ -5,6 +5,7 @@
   <meta charset='UTF-8' />
   <meta http-equiv='X-UA-Compatible' content='IE=edge' />
   <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <link rel='stylesheet' href='./common.css' />
   <link rel='stylesheet' href='./style.css' />
   <title>Tracky</title>
 </head>
@@ -14,23 +15,28 @@
     <p>Tracky</p>
   </nav>
   <main>
-    <h4>Add a Log</h4>
-    <label for='start-time'>Start Time:</label>
-    <input type='time' id='start-time' />
+    <form id='time-input-form'>
 
-    <label for='end-time'>End Time:</label>
-    <input type='time' id='end-time' />
+      <label for='start-time'>
+        Start Time:
+        <input type='time' id='start-time' class='input-field' />
+      </label>
 
-    <textarea id='description' placeholder='Description' required></textarea>
+      <label for='end-time'>
+        End Time:
+        <input type='time' id='end-time' class='input-field' />
+      </label>
 
-    <label for='tags'>Tags (comma separated):</label>
-    <input type='text' id='tags'>
+      <textarea id='description' placeholder='Description' rows='3' required class='input-field'></textarea>
 
-    <button id='save-log'>Save Log</button>
+      <input type='text' id='tags' placeholder='Tag' class='input-field'>
+
+      <button id='save-log'>Save Log</button>
+    </form>
 
     <div id='total-time'></div>
     <ul id='log-container'></ul>
-    <button id="view-by-tags-btn">View Logs by Tags</button>
+    <button class='logs-btn' id="view-by-tags-btn">View Logs by Tags</button>
   </main>
 </body>
 <script type='module' src='./app.js'></script>

@@ -23,7 +23,7 @@ function save_log_entry(): void {
   const start_time = (document.getElementById('start-time') as HTMLInputElement).value;
   const end_time = (document.getElementById('end-time') as HTMLInputElement).value;
   const description = (document.getElementById('description') as HTMLTextAreaElement).value;
-  const tag= (document.getElementById('tags') as HTMLInputElement).value;
+  const tag = (document.getElementById('tags') as HTMLInputElement).value;
   const today_date = get_today_date();
 
   if (!start_time || !end_time || start_time >= end_time) {
@@ -45,7 +45,6 @@ function save_log_entry(): void {
     };
 
     logs[today_date].push(new_log);
-    console.log('DBG:',{logs});
 
     chrome.storage.local.set({ logs: logs }, () => {
       (document.getElementById('start-time') as HTMLInputElement).value = '';
@@ -97,8 +96,8 @@ function display_logs(): void {
         <li>
           <strong>${format_duration(duration)}</strong>
           <small>(${format_into_12hr(log.startTime)}-${format_into_12hr(log.endTime)})</small>: ${log.description}
-          <button class="edit-btn" data-index="${index}">\u{270E}</button>
-          <button class="delete-btn" data-index="${index}">\u{1F5D1}️</button>
+          <button class="edit-btn log-action-btn" data-index="${index}">\u{270E}</button>
+          <button class="delete-btn log-action-btn" data-index="${index}">\u{1F5D1}️</button>
         </li>
       `;
       logContainer.appendChild(log_entry);
@@ -135,12 +134,17 @@ function calculate_duration(start_time: string, end_time: string): number {
 }
 
 function format_duration(minutes: number): string {
-  if (minutes >= 60) {
-    const hours = Math.floor(minutes / 60);
-    const remaining_minutes = minutes % 60;
+  const an_hour = 60;
+
+  if (minutes >= an_hour) {
+    const hours = Math.floor(minutes / an_hour);
+    const remaining_minutes = Math.round(minutes % an_hour);
+
+    if (remaining_minutes === an_hour) return `${hours + 1}h`;
+
     return `${hours}h ${remaining_minutes}m`;
   }
-  return `${minutes}m`;
+  return `${Math.round(minutes)}m`;
 }
 
 function format_into_12hr(time: string): string {
@@ -181,17 +185,21 @@ function edit_log(index: number, log: LogEntry, date: string): void {
   editForm.classList.add('edit-form');
   editForm.innerHTML = `
     <h3>Edit Log</h3>
-    <label for="edit-start-time">Start Time:</label>
-    <input type="time" id="edit-start-time" value="${log.startTime}">
-    <label for="edit-end-time">End Time:</label>
-    <input type="time" id="edit-end-time" value="${log.endTime}">
-    <label for="edit-description">Description:</label>
-    <textarea id="edit-description">${log.description}</textarea>
-    <label for="edit-tags">Tags (comma separated):</label>
-    <input type="text" id="edit-tags"value="${log?.tag || null}">
-    <button id="save-edit-btn">Save</button>
-    <button id="cancel-edit-btn">Cancel</button>
-  `;
+    <form id='time-input-form'>
+      <label for='edit-start-time'>
+        Start Time:
+        <input type='time' id='edit-start-time' class='input-field' value=${log.startTime} />
+      </label>
+      <label for='edit-end-time'>
+        End Time:
+        <input type='time' id='edit-end-time' class='input-field' value=${log.endTime} />
+      </label>
+      <textarea id='edit-description' class='input-field'>${log.description}</textarea>
+      <input type='text' id='edit-tags' class='input-field' value=${log?.tag || ''}>
+      <button id="save-edit-btn">Save</button>
+      <button id="cancel-edit-btn">Cancel</button>
+    </form>
+  `
 
   logContainer.appendChild(editForm);
 

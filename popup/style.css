@@ -1,20 +1,10 @@
 :root {
-    --navBG: #353839;
-    --navText: #f9ab58;
-    --mainBG: #6c7072;
-    --mainText: #fbfcf8;
-}
-
-body {
-    width: 250px;
-    margin: 0;
-    padding: 0;
-    background-color: var(--baseBG);
-    color: var(--baseText);
+    --navBG: var(--primary);
+    --navText: #d8dee9;
 }
 
 nav {
-    background-color: var(--navBG);
+    background-color: rgba(var(--navBG), 1);
     padding: 1px;
     margin: 0;
 
@@ -22,6 +12,7 @@ nav {
     justify-content: center;
     align-items: center;
 }
+
 nav p {
     font-size: 22px;
     color: var(--navText);
@@ -33,12 +24,92 @@ nav p {
 
 main {
     font-size: 16px;
-    color: var(--mainText);
-    background-color: var(--mainBG);
     padding: 5px;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.log-action-btn {
+    background: none;
+    outline: none;
+    border: none;
+    padding: 2px 3px;
+    margin: 0;
+
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(var(--accent), 1);
+        border-radius: 5px;
+    }
+}
+
+#time-input-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 8px;
+    max-width: 400px;
+    margin: 0 auto;
+    border: 1px solid rgba(var(--text-primary), 1);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+
+    label {
+        display: flex;
+        align-items: center;
+
+        input[type="time"],
+        input[type="text"] {
+            margin-left: 10px;
+            padding: 2px;
+            border: 1px solid rgba(var(--text-primary), 1);
+            border-radius: 4px;
+        }
+    }
+
+    textarea {
+        resize: vertical;
+        border: 1px solid rgba(var(--text-primary), 1);
+        border-radius: 4px;
+        font-family: inherit;
+    }
+
+    #description {
+        width: 100%;
+    }
+
+    #tags {
+        border: 1px solid rgba(var(--text-primary), 1);
+        border-radius: 3px;
+        width: 100%;
+    }
+
+    button {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: rgba(var(--primary), 1);
+        color: rgba(var(--text-primary), 1);
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+            background-color: rgba(var(--primary), 0.8);
+        }
+
+        &:active {
+            background-color: rgba(var(--primary), 0.6);
+        }
+    }
+
+    /* Adjustments for Start Time and End Time labels */
+    label[for="start-time"],
+    label[for="end-time"] {
+        justify-content: space-between;
+    }
 }

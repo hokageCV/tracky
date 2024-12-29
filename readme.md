@@ -1,21 +1,33 @@
-# Chrome Extension Template
+# Tracky - Track your time easily
 
-A starter kit for developers who want to create a Chrome extension without having to worry about the initial setup. This template provides a basic project structure and files to help developers get started right away.
+Tracky is a minimial time tracker that helps you analyze how you spend your time.
 
 ## Features
 
--   Basic file structure and setup for Chrome extensions
--   Manifest V3 file with common properties pre-configured
--   Background script file with basic functionality
--   Content script file with basic functionality
--   Popup page file with basic functionality
--   Pre-configured icons and images
--   Basic CSS styling for pages
+- Add and edit the logs.
+- Tags to categorize the logs.
 
-## How to Use
+## Development
 
-1. Clone or download the repository to your local machine.
-2. Open the template folder in your preferred code editor.
-3. Modify the manifest.json file to suit your extension's needs.
-4. Modify the files to implement your extension's functionality.
-5. Test your extension in Chrome by loading it as an unpacked extension.
+1. Clone the repository
+```bash
+git clone git@github.com:hokageCV/tracky.git
+```
+2. Install dependencies
+```bash
+pnpm add
+```
+3. Build javascript files
+```bash
+pnpm build
+```
+4. Add extension to browser
+   1. Open browser's extensions settings
+   2. Enable "Developer Mode"
+   3. Load the tracky directory as unpacked extension
+
+## Future Enhancements
+
+- [ ] Improved Analytics: Add charts and statistics for better visualization of activity trends.
+- [ ] Timer to track time range, instead of adding both start & end time.
+- [ ] Export Data: Allow users to export their logs as a CSV file.

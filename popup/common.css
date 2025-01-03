@@ -14,6 +14,9 @@
 }
 
 body {
+  font-family: Helvetica, sans-serif;
+  font-size: 16px;
+
   width: 350px;
   margin: 0;
   padding: 0;
@@ -34,4 +37,46 @@ body {
 
 .input-field {
   background-color: #d8dee9;
+}
+
+/* ======================================= */
+/* Scrollbar */
+
+/* Firefox
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #3b4252 #5e81ac;
+  }
+
+  /* Chrome, Edge, and Safari */
+/* *::-webkit-scrollbar {
+    width: 8px;
+  } */
+
+/* *::-webkit-scrollbar-track {
+    background: #5e81ac;
+  } */
+
+/* *::-webkit-scrollbar-thumb {
+    background-color: #3b4252;
+    border-radius: 71px;
+    border: none;
+  } */
+/* } */
+
+
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  border-radius: 4px;
+  background-color: #3B4252;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 16px;
+  background-color: #5E81AC;
 }

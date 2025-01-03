@@ -97,11 +97,13 @@ function display_logs(): void {
       const log_entry = document.createElement('div');
       log_entry.classList.add('log-entry');
       log_entry.innerHTML = `
-        <li>
-          <strong>${format_duration(duration)}</strong>
-          <small>(${format_into_12hr(log.startTime)}-${format_into_12hr(log.endTime)})</small>: ${log.description}
+        <li class='log-item'>
+          <strong><small>${format_duration(duration)}</small></strong>
+          <small>(${format_into_12hr(log.startTime)}-${format_into_12hr(log.endTime)})</small>
           <button class="edit-btn log-action-btn" data-index="${index}">\u{270E}</button>
           <button class="delete-btn log-action-btn" data-index="${index}">\u{1F5D1}️</button>
+          <br />
+          <small> ${log.description} </small>
         </li>
       `;
       logContainer.appendChild(log_entry);

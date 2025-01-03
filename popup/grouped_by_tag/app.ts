@@ -38,7 +38,7 @@ function display_logs_grouped_by_tag(): void {
 
       const tagSection = document.createElement('div');
       tagSection.classList.add('tag-group');
-      tagSection.innerHTML = `<h4>${tag === 'untagged' ? 'Untagged' : tag} - ${format_duration(total_tag_time)}</h4>`;
+      tagSection.innerHTML = `<p>${tag === 'untagged' ? 'Untagged' : tag} - ${format_duration(total_tag_time)}</p>`;
 
       const log_list = document.createElement('ul');
       logs_with_tag.forEach((log) => {

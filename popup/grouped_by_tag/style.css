@@ -1,3 +1,17 @@
-body{
+body {
   padding: 10px;
+  font-size: 16px;
+
+
+  #back-btn{
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  #tags-log-container {
+    margin-top: 8px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
 }
+

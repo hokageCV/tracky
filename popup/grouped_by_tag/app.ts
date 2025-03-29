@@ -31,6 +31,11 @@ function display_logs_grouped_by_tag(): void {
     const tagsListContainer = document.getElementById('tags-log-container') as HTMLDivElement;
     tagsListContainer.innerHTML = '';
 
+    const copyButton = document.createElement('button');
+    copyButton.textContent = 'Copy as Markdown';
+    copyButton.addEventListener('click', () => copyLogsAsMarkdown(copyButton, logs_by_tag));
+    tagsListContainer.appendChild(copyButton);
+
     for (const [tag, logs_with_tag] of Object.entries(logs_by_tag)) {
       const total_tag_time = logs_with_tag.reduce((total, log) => {
         return total + calculate_duration(log.startTime, log.endTime);
@@ -50,6 +55,37 @@ function display_logs_grouped_by_tag(): void {
       tagSection.appendChild(log_list);
       tagsListContainer.appendChild(tagSection);
     }
+  });
+}
+
+
+// ============================ Copy as Markdown
+function copyLogsAsMarkdown(copyButton: HTMLButtonElement, logs_by_tag: { [tag: string]: LogEntry[] }): void {
+  let markdown = '';
+
+  for (const [tag, logs_with_tag] of Object.entries(logs_by_tag)) {
+    const total_tag_time = logs_with_tag.reduce((total, log) => {
+      return total + calculate_duration(log.startTime, log.endTime);
+    }, 0);
+
+    markdown += `- ${tag === 'untagged' ? 'Untagged' : tag}       | ${format_duration(total_tag_time)}\n`;
+
+
+    let indent = '	'; // 1 tab
+    logs_with_tag.forEach((log) => {
+      markdown += `${indent}- ${log.description}\n`;
+    });
+  }
+
+  navigator.clipboard.writeText(markdown).then(() => {
+    const originalText = copyButton.textContent;
+    copyButton.textContent = 'Copied!';
+
+    setTimeout(() => {
+      copyButton.textContent = originalText;
+    }, 300);
+  }).catch((error) => {
+    console.error('Failed to copy to clipboard: ', error);
   });
 }
 

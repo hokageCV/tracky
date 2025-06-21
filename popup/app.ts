@@ -110,7 +110,7 @@ function display_logs(): void {
 
       const deleteButton = log_entry.querySelector('.delete-btn');
       if (deleteButton) {
-        deleteButton.addEventListener('click', () => {
+        deleteButton.addEventListener('dblclick', () => {
           delete_log(index, today_date);
         });
       }

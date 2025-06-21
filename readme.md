@@ -31,3 +31,8 @@ pnpm build
 - [ ] Improved Analytics: Add charts and statistics for better visualization of activity trends.
 - [ ] Timer to track time range, instead of adding both start & end time.
 - [ ] Export Data: Allow users to export their logs as a CSV file.
+
+## Development
+
+- Make changes, then run build script
+
